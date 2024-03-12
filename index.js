@@ -1,9 +1,17 @@
+require('dotenv').config({path: "./.env"})
+
+const express = require('express')
 const https = require('https')
 const queryString = require('querystring')
-require('dotenv').config({path: "./.env"})
-const env = process.env
 const dates = require('./dates')
 
+const env = process.env
+const app = express()
+
+const server = app.listen(parseInt(env.PORT), 'localhost', () => {
+  const { address, port } = server.address();
+  console.log(`Express app is running at ${env.PROTOCOL}//${address}:${port}`); // IPv6
+})
 
 const parameters = {
   start_date: dates.lastMondaySerialized(),
