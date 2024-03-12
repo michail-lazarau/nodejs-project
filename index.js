@@ -1,13 +1,22 @@
 const https = require('https')
+const queryString = require('querystring')
+require('dotenv').config({path: "./.env"})
+const env = process.env
+const dates = require('./dates')
 
-const nasaAPIToken = "uc1cuf9cfUA8oLzOOmVRrFNGEEiKYGgvVSwXKPgg"
-const startDate ="2015-09-07"
-const endDate = "2015-09-08"
+
+const parameters = {
+  start_date: dates.lastMondaySerialized(),
+  end_date: dates.lastFridaySerialized(),
+  api_key: env.NASA_API_KEY
+}
+
+const get_PATH_NeoWs_args = queryString.stringify(parameters)
 
 const options = {
-  protocol: "https:",
-  hostname: 'api.nasa.gov',
-  path: `/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=${nasaAPIToken}`,
+  protocol: env.PROTOCOL,
+  hostname: env.HOSTNAME,
+  path: `${env.PATH_NeoWs}?${get_PATH_NeoWs_args}`,
   method: 'GET',
   headers: {
     'Content-Type': 'application/json'
