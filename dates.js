@@ -17,7 +17,7 @@ const getLastMondayDate = () => {
 
 const formatDate = (date) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
-  return date.toLocaleDateString('fr-CA', options)
+  return date.toLocaleDateString('fr-CA', options) // 'fr-CA' gives format: 'yyyy-MM-dd'
 }
 
 exports.lastMondaySerialized = () => {
