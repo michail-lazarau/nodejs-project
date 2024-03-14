@@ -2,7 +2,7 @@ require('dotenv').config({path: "./.env"})
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const neoWsRoutes = require('./routes/NeoWs')
+const asteroidsRoutes = require('./routes/Asteroids')
 
 const env = process.env
 const app = express()
@@ -16,7 +16,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(neoWsRoutes)
+app.use(asteroidsRoutes)
 
 const server = app.listen(parseInt(env.PORT), 'localhost', () => {
   const { address, port } = server.address();
