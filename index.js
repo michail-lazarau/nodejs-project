@@ -1,10 +1,20 @@
 require('dotenv').config({path: "./.env"})
 
 const express = require('express')
+const bodyParser = require('body-parser')
+const neoWsRoutes = require('./routes/NeoWs')
 
 const env = process.env
 const app = express()
-const neoWsRoutes = require('./routes/NeoWs')
+
+app.use(bodyParser.json()) // application-json
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
+  res.setHeader('Access-Control-Allow-Header', 'Content-Type, Authorization')
+  next()
+})
 
 app.use(neoWsRoutes)
 
