@@ -36,8 +36,7 @@ const parseItem = (el) => ({
   relative_velocity: el.close_approach_data[0].relative_velocity.kilometers_per_second
 })
 
-const filterData = (earthObjects, hazardous) => {
-  let filteredData = Object.keys(earthObjects).reduce((acc, key) => {
+const filterData = (earthObjects, hazardous) => Object.keys(earthObjects).reduce((acc, key) => {
 
     const filteredData = earthObjects[key].reduce((acc, item) => {
       if (hazardous === 'yes' && item.is_potentially_hazardous_asteroid) {
@@ -51,10 +50,11 @@ const filterData = (earthObjects, hazardous) => {
     }, [])
 
     if (filteredData.length) {
-      acc[key] = filteredData
+      acc[key] = {
+        count: filteredData.length,
+        asteroids: filteredData
+      }
     }
 
     return acc
   }, {})
-  return filteredData
-}
