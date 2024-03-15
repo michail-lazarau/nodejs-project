@@ -8,7 +8,7 @@ exports.getMeteors = async (req, res, next) => {
     res.status(200).json(filterData(data.near_earth_objects, is_potentially_hazardous_asteroid) )
   } catch(err) {
     console.log(err)
-    res.status(500).json({message: 'Help!', error: err.message})
+    res.status(err.response.status || 500).json({message: 'Help!', error: err.message})
   }
 }
 
