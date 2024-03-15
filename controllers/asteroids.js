@@ -2,10 +2,10 @@ const neoWs = require('../services/NeoWs')
 
 exports.getMeteors = async (req, res, next) => {
   try {
-    const { is_potentially_hazardous_asteroid = '', ...rest} = req.query;
+    const { is_potentially_hazardous_asteroid = '', is_counted = '', ...rest} = req.query;
     console.log(req.query);
     const { data } = await neoWs.getMeteors(makeQueryParams(rest));
-    res.status(200).json(filterData(data.near_earth_objects, is_potentially_hazardous_asteroid) )
+    res.status(200).json(filterData(data.near_earth_objects, is_potentially_hazardous_asteroid, is_counted) )
   } catch(err) {
     console.log(err)
     res.status(err.response.status || 500).json({message: 'Help!', error: err.message})
@@ -36,7 +36,7 @@ const parseItem = (el) => ({
   relative_velocity: el.close_approach_data[0].relative_velocity.kilometers_per_second
 })
 
-const filterData = (earthObjects, hazardous) => Object.keys(earthObjects).reduce((acc, key) => {
+const filterData = (earthObjects, hazardous, count) => Object.keys(earthObjects).reduce((acc, key) => {
 
     const filteredData = earthObjects[key].reduce((acc, item) => {
       if (hazardous === 'yes' && item.is_potentially_hazardous_asteroid) {
@@ -50,9 +50,13 @@ const filterData = (earthObjects, hazardous) => Object.keys(earthObjects).reduce
     }, [])
 
     if (filteredData.length) {
+      if (count === 'true') {
       acc[key] = {
         count: filteredData.length,
         asteroids: filteredData
+      }
+    } else {
+        acc[key] = filteredData
       }
     }
 
