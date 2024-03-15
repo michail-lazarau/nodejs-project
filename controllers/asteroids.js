@@ -33,7 +33,7 @@ const parseItem = (el) => ({
   diameter_in_meters: el.estimated_diameter.meters,
   is_potentially_hazardous_asteroid: el.is_potentially_hazardous_asteroid,
   close_approach_date_full: el.close_approach_data[0].close_approach_date_full,
-  relative_velocity: el.close_approach_data[0].relative_velocity.kilometers_per_second
+  relative_velocity: { kilometers_per_second: el.close_approach_data[0].relative_velocity.kilometers_per_second }
 })
 
 const filterData = (earthObjects, hazardous, count) => Object.keys(earthObjects).reduce((acc, key) => {
