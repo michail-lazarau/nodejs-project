@@ -21,11 +21,11 @@ const getPhotos = async (urlSearchParams) => {
 
 // MARK: queryParams: api_key
 exports.getMostRecentPhoto = async (urlSearchParams) => {
-  const { data } = await getPhotoManifestData(urlSearchParams)
-  const earth_date = dateUtil.format(data.photo_manifest.max_date, DATE_TEMPLATE)
+  const { data: manifestData } = await getPhotoManifestData(urlSearchParams)
+  const earth_date = dateUtil.format(manifestData.photo_manifest.max_date, DATE_TEMPLATE)
 
   urlSearchParams.append("earth_date", earth_date)
 
-  const { photos } = await getPhotos(urlSearchParams)
-  return photos.pop().img_src // pop() is quicker than slice(-1)
+  const { data: photosData } = await getPhotos(urlSearchParams)
+  return photosData.photos.pop().img_src // pop() is quicker than slice(-1)
 }
