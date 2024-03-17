@@ -27,3 +27,5 @@ exports.lastMondaySerialized = () => {
 exports.lastFridaySerialized = () => {
   return formatDate(getLastFridayDate())
 }
+
+exports.DATE_TEMPLATE = 'yyyy-MM-dd'

@@ -1,7 +1,7 @@
 const env = process.env
 
-exports.make = (path, queryParams) => {
+exports.make = (path, urlSearchParams) => {
   const url = new URL(`${env.PROTOCOL}://${env.HOSTNAME}${path}`)
-  url.search = queryParams
+  url.search = urlSearchParams
   return url.toString()
 }

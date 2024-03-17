@@ -8,7 +8,7 @@ exports.getMeteors = async (req, res, next) => {
     res.status(200).json(filterData(data.near_earth_objects, is_potentially_hazardous_asteroid, is_counted) )
   } catch(err) {
     console.log(err)
-    res.status(err.response.status || 500).json({message: 'Help!', error: err.message})
+    res.status(err.response.status || 500).json({message: 'getMeteors request has failed!', error: err.message})
   }
 }
 
@@ -18,13 +18,13 @@ const makeQueryParams = (query) => {
   const END_DATE = "end_date"
   const API_KEY = "api_key"
 
-  const params = new URLSearchParams({})
+  const urlSearchParams = new URLSearchParams({})
 
   query.hasOwnProperty(START_DATE) && params.append(START_DATE, query[START_DATE])
   query.hasOwnProperty(END_DATE) && params.append(END_DATE, query[END_DATE])
   query.hasOwnProperty(API_KEY) && params.append(API_KEY, query[API_KEY])
 
-  return params
+  return urlSearchParams
 }
 
 const parseItem = (el) => ({

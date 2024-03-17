@@ -1,33 +1,20 @@
-const neoWs = require('../services/NeoWs')
+const marsRoverPhotosService = require('../services/marsRoverPhotos')
 
-exports.postPhoto = async (req, res, next) => {
-  const userId = req.body.userId
-  const userName = req.body.userName
-  const apiKey = req.body.apiKey
-
-  await
-
-  res.status(201).json({
-    userId: userId,
-    userName: userName,
-    apiKey: apiKey
-  })
+exports.postUserToGetLatestMarsPhoto = async (req, res, next) => {
+  const apiKey = req.body.api_key
+  try {
+  const latestMarsPhoto = await marsRoverPhotosService.getMostRecentPhoto(makeQueryParams(apiKey))
+  res.status(201).redirect(latestMarsPhoto)
+  } catch(err) {
+  console.log(err)
+  res.status(err.response.status || 500).json({message: 'postUserToGetLatestMarsPhoto request has failed!', error: err.message})
+}
+  // res.status(201).send(`<img src='${latestMarsPhoto}'>`)
+  // res.status(201).render('')
 }
 
-const makeQueryParams = (query) => {
-
-  const SOL = "sol"
-  const CAMERA = "camera"
-  const PAGE = "page"
-  const API_KEY = "api_key"
-
-  const params = new URLSearchParams({
-
-  })
-
-  query.hasOwnProperty(START_DATE) && params.append(START_DATE, query[START_DATE])
-  query.hasOwnProperty(END_DATE) && params.append(END_DATE, query[END_DATE])
-  query.hasOwnProperty(API_KEY) && params.append(API_KEY, query[API_KEY])
-
-  return params
+const makeQueryParams = (apiKey) => {
+  const urlSearchParams = new URLSearchParams({})
+  urlSearchParams.append("api_key", apiKey)
+  return urlSearchParams
 }
