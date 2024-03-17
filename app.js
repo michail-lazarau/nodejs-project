@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const asteroidsRoutes = require('./routes/asteroids')
 const marsRoverPhotosRoutes = require('./routes/marsRoverPhotos')
 
-const env = process.env
+const { PORT, PROTOCOL } = process.env
 const app = express()
 
 app.use(bodyParser.json()) // application-json
@@ -21,7 +21,7 @@ app.use(asteroidsRoutes)
 
 app.use(marsRoverPhotosRoutes)
 
-const server = app.listen(parseInt(env.PORT), 'localhost', () => {
+const server = app.listen(parseInt(PORT), 'localhost', () => {
   const { address, port } = server.address();
-  console.log(`Express app is running at ${env.PROTOCOL}//${address}:${port}`); // IPv6
+  console.log(`Express app is running at ${PROTOCOL}//${address}:${port}`); // IPv6
 })

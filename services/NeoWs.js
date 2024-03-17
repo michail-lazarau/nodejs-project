@@ -1,5 +1,5 @@
 const axios = require('axios')
-const urlBuilder = require('../urlBuilder')
+const urlBuilder = require('../utilities/urlBuilder')
 
 const PATH_NeoWs = process.env.PATH_NeoWs
 
