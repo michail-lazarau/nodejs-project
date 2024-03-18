@@ -2,8 +2,9 @@ require('dotenv').config({path: "./.env"})
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const asteroidsRoutes = require('./routes/asteroids')
-const marsRoverPhotosRoutes = require('./routes/marsRoverPhotos')
+const asteroidsRoutes = require('./src/routes/asteroids')
+const marsRoverPhotosRoutes = require('./src/routes/marsRoverPhotos')
+const { errorHandler, notFoundHandler } = require('./ErrorHandlingMiddlewares/errorHandler');
 
 const { PORT, PROTOCOL } = process.env
 const app = express()
@@ -20,6 +21,10 @@ app.use((req, res, next) => {
 app.use(asteroidsRoutes)
 
 app.use(marsRoverPhotosRoutes)
+
+app.use('*', notFoundHandler)
+
+app.use(errorHandler)
 
 const server = app.listen(parseInt(PORT), 'localhost', () => {
   const { address, port } = server.address();
