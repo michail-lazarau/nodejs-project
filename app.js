@@ -22,7 +22,7 @@ app.use(asteroidsRoutes)
 
 app.use(marsRoverPhotosRoutes)
 
-app.use('*', notFoundHandler)
+app.use(notFoundHandler)
 
 app.use(errorHandler)
 
