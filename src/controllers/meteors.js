@@ -1,10 +1,24 @@
 const neoWs = require('../services/NeoWs')
 
+exports.getStartPage = (req, res, next) => {
+  res.render('meteors/meteors-search', {
+    pageTitle: 'Meteors Search Page',
+    path: '/'
+  })
+}
+
 exports.getMeteors = async (req, res, next) => {
   try {
+    console.log(req.query)
     const { is_potentially_hazardous_asteroid = '', is_counted = '', ...rest} = req.query;
     const { data } = await neoWs.getMeteors(makeQueryParams(rest));
-    res.status(200).json(filterData(data.near_earth_objects, is_potentially_hazardous_asteroid, is_counted) )
+    // res.status(200).json(filterData(data.near_earth_objects, is_potentially_hazardous_asteroid, is_counted) )
+    const filteredData = filterData(data.near_earth_objects, is_potentially_hazardous_asteroid, is_counted)
+    res.render('meteors/search-result', {
+      data: filteredData,
+      pageTitle: 'Meteors Search Result',
+      path: `/meteors/${req.query}`
+    })
   } catch(err) {
     next(err)
   }

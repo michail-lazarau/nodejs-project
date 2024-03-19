@@ -1,15 +1,27 @@
 require('dotenv').config({path: "./.env"})
 
 const express = require('express')
+const nunjucks = require('nunjucks')
 const bodyParser = require('body-parser')
-const asteroidsRoutes = require('./src/routes/asteroids')
+const asteroidsRoutes = require('./src/routes/meteors')
 const marsRoverPhotosRoutes = require('./src/routes/marsRoverPhotos')
-const { errorHandler, notFoundHandler } = require('./ErrorHandlingMiddlewares/errorHandler');
+const { errorHandler, notFoundHandler } = require('./ErrorHandlingMiddlewares/errorHandler')
+const path = require('path')
 
 const { PORT, PROTOCOL } = process.env
 const app = express()
 
+app.use(express.static(path.join(__dirname, 'public'))) // styles
+
 app.use(bodyParser.json()) // application-json
+
+app.engine('html', nunjucks.render)
+app.set('view engine', 'html')
+
+nunjucks.configure(path.join(__dirname, 'views'), {
+  autoescape: false,
+  express: app,
+})
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -27,6 +39,6 @@ app.use(notFoundHandler)
 app.use(errorHandler)
 
 const server = app.listen(parseInt(PORT), 'localhost', () => {
-  const { address, port } = server.address();
-  console.log(`Express app is running at ${PROTOCOL}//${address}:${port}`); // IPv6
+  const { address, port } = server.address()
+  console.log(`Express app is running at ${PROTOCOL}//${address}:${port}`) // IPv6
 })
