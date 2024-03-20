@@ -1,0 +1,18 @@
+<html lang="en">
+{% include "../includes/head.html" %}
+{% block css %}
+<link rel="stylesheet" href="/stylesheets/forms.css">
+{% endblock %}
+<body>
+{% include "../includes/navigation.html" %}
+<main>
+    <form id="nasa_form" class="search-meteor-form" action="/mars-rover-latest-photo" method="POST">
+        <div class="form-control">
+            <label class="required-field" for="api_key">Nasa Demo Key</label>
+            <input type="text" name="api_key" id="api_key">
+        </div>
+        <button class="btn" type="submit">Search for meteors</button>
+    </form>
+</main>
+</body>
+</html>
