@@ -39,5 +39,16 @@
     "eslint-plugin-security": "^2.1.1",
     "husky": "^9.0.11",
     "prettier": "^3.2.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md,html}": [
+      "prettier -single-quote --write",
+      "git add"
+    ]
   }
 }
