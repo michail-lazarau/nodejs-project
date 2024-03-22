@@ -1,9 +1,8 @@
-const express = require('express')
-const router = express.Router()
-const meteorsController = require('../controllers/meteors')
-const validator = require("../apiSchemas/request/schemaValidator");
+const express = require('express');
+const router = express.Router();
+const meteorsController = require('../controllers/meteors');
+const validator = require('../apiSchemas/request/schemaValidator');
 
-router.get('/', meteorsController.getStartPage)
-router.get('/meteors', meteorsController.getMeteors)
-// validator.validateRequestSchema('neoWsSchema')
-module.exports = router
+router.get('/', meteorsController.getStartPage);
+router.get('/meteors', validator.validateRequestSchema('neoWsSchema'), meteorsController.getMeteors);
+module.exports = router;

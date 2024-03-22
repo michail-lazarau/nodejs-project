@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 {% include "../includes/head.html" %}
 {% block css %}
@@ -6,7 +7,7 @@
 <body>
 {% include "../includes/navigation.html" %}
 <main>
-    <form id="nasa_form" class="search-meteor-form" action="/meteors" method="GET">
+    <form class="search-form" action="/meteors" method="GET">
         <div class="form-control">
             <label for="start_date">Start Date</label>
             <input type="text" name="start_date" id="start_date" placeholder="yyyy-MM-dd">
@@ -19,8 +20,8 @@
             <label for="is_potentially_hazardous_asteroid">Is Potentially Hazardous</label>
             <input type="text" name="is_potentially_hazardous_asteroid" id="is_potentially_hazardous_asteroid" placeholder="true/false">
         </div>
-        <div class="form-control">
-            <label for="is_counted">Asteroids Counter For Day</label>
+        <div class="form-control" id="isCountedControl">
+            <label class="required-field" for="is_counted">Asteroids Counter For Day</label>
             <input type="text" name="is_counted" id="is_counted" placeholder="true/false">
         </div>
         <div class="form-control">

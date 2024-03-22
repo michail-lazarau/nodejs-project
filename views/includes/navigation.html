@@ -1,8 +1,9 @@
 <header class="main-header">
     <nav class="main-header__nav">
         <ul class="main-header__item-list">
+            // TODO: template injection doesn't work
             <li class="main-header__item"><a class="{% if path === '/' %} 'active' {% endif %}" href="/">Search For Meteors</a></li>
-            <li class="main-header__item"><a class="{% if path === '/mars-rover-latest-photo' %} 'active' {% endif %}" href="/mars-rover-latest-photo">Last Martian Photo</a></li>
+            <li class="main-header__item"><a class="{% if path === '/mars-rover-latest-photo-search' %} 'active' {% endif %}" href="/mars-rover-latest-photo-search">Last Martian Photo</a></li>
         </ul>
     </nav>
 </header>
