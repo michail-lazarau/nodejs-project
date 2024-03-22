@@ -1,6 +1,6 @@
-const joi = require('joi');
+import joi from 'joi';
 
-const neoWs = joi.object({
+const neoWsSchema = joi.object({
   start_date: joi.date().less('now').iso(),
   end_date: joi.date().less('now').iso(),
   is_potentially_hazardous_asteroid: joi.boolean(),
@@ -8,4 +8,4 @@ const neoWs = joi.object({
   is_counted: joi.boolean(),
 });
 
-module.exports = neoWs;
+export default neoWsSchema;

@@ -1,18 +1,16 @@
-require('dotenv').config({ path: './.env' });
-
-const express = require('express');
-const nunjucks = require('nunjucks');
-const bodyParser = require('body-parser');
-const asteroidsRoutes = require('./src/routes/meteors');
-const marsRoverPhotosRoutes = require('./src/routes/photos');
-const {
-  errorHandler,
-  notFoundHandler,
-} = require('./src/ErrorHandlingMiddlewares/errorHandler');
-const path = require('path');
+import dotenv from 'dotenv';
+import express from 'express';
+import nunjucks from 'nunjucks';
+import bodyParser from 'body-parser';
+import asteroidsRoutes from './src/routes/meteors.ts';
+import marsRoverPhotosRoutes from './src/routes/photos.ts';
+import { errorHandler, notFoundHandler } from './src/ErrorHandlingMiddlewares/errorHandler';
+import path from 'path';
 
 const { PORT } = process.env;
 const app = express();
+
+dotenv.config({ path: './.env' });
 
 app.use(express.static(path.join(__dirname, 'public'))); // styles
 
@@ -28,10 +26,7 @@ nunjucks.configure(path.join(__dirname, 'views'), {
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, PUT, PATCH, DELETE'
-  );
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Header', 'Content-Type, Authorization');
   // res.setHeader('Access-Control-Allow-Header', 'Content-Type,  application/json')
   next();
