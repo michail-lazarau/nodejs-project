@@ -1,10 +1,10 @@
 import dotenv from 'dotenv';
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
-import asteroidsRoutes from './src/routes/meteors.ts';
-import marsRoverPhotosRoutes from './src/routes/photos.ts';
-import { errorHandler, notFoundHandler } from './src/ErrorHandlingMiddlewares/errorHandler';
+import asteroidsRoutes from './routes/meteors';
+import marsRoverPhotosRoutes from './routes/photos';
+import { errorHandler, notFoundHandler } from './ErrorHandlingMiddlewares/errorHandler';
 import path from 'path';
 
 const { PORT } = process.env;
@@ -24,11 +24,10 @@ nunjucks.configure(path.join(__dirname, 'views'), {
   express: app,
 });
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Header', 'Content-Type, Authorization');
-  // res.setHeader('Access-Control-Allow-Header', 'Content-Type,  application/json')
   next();
 });
 
@@ -40,7 +39,6 @@ app.use(notFoundHandler);
 
 app.use(errorHandler);
 
-const server = app.listen(parseInt(PORT), 'localhost', () => {
-  const { port } = server.address();
-  console.log(`Express app is running on port: ${port}`); // IPv6
+app.listen(parseInt(PORT ?? '3000'), 'localhost', () => {
+  console.log(`Express app is running on port: ${PORT}`);
 });

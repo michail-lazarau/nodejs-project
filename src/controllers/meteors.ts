@@ -1,8 +1,6 @@
-import getMeteorsPhoto from '../services/NeoWs.ts';
+import * as service from '../services/neoWs';
 import { Request, Response, NextFunction } from 'express';
-// eslint-disable-next-line import/no-unresolved
-import { Nasa, Home } from '../network/models/nasa/meteor.js';
-import { ParsedQs } from 'qs';
+import { Nasa, Home } from '../network/models/nasa/meteor';
 import { encode } from 'node:querystring';
 
 export const getStartPage = (res: Response) => {
@@ -13,14 +11,14 @@ export const getStartPage = (res: Response) => {
 };
 
 type QueryRest = { [key: string]: string | undefined };
-type QueryComponent = string | ParsedQs | string[] | ParsedQs[] | undefined;
 
 export const getMeteors = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { is_potentially_hazardous_asteroid = '', is_counted = '', ...rest } = req.query;
-    const hazardous = convertQueryComponentToBoolean(is_potentially_hazardous_asteroid);
-    const onlyCount = convertQueryComponentToBoolean(is_counted);
-    const { data } = await getMeteorsPhoto(makeQueryParams(rest as QueryRest));
+    const hazardous = is_potentially_hazardous_asteroid === 'true';
+    const onlyCount = is_counted === 'true';
+    const queryParams = new URLSearchParams(encode(rest as QueryRest));
+    const { data } = await service.getMeteors(queryParams);
     const filteredData = filterData(data.near_earth_objects, hazardous, onlyCount);
     res.status(200).render('meteors/search-result', {
       data: filteredData,
@@ -31,30 +29,6 @@ export const getMeteors = async (req: Request, res: Response, next: NextFunction
     next(err);
   }
 };
-
-const convertQueryComponentToBoolean = (value: QueryComponent): boolean => {
-  let convertedValue: boolean = false;
-  if (value === 'true') {
-    convertedValue = true;
-  }
-  return convertedValue;
-};
-
-const makeQueryParams = (query: QueryRest) => {
-  const urlQueryString = encode(query);
-  return new URLSearchParams(urlQueryString);
-};
-
-const convert = (el: Nasa.Response.Meteor): Home.Response.Meteor => ({
-  id: el.id,
-  name: el.name,
-  diameter_in_meters: el.estimated_diameter.meters,
-  is_potentially_hazardous_asteroid: el.is_potentially_hazardous_asteroid,
-  close_approach_date_full: el.close_approach_data[0].close_approach_date_full,
-  relative_velocity: {
-    kilometers_per_second: el.close_approach_data[0].relative_velocity.kilometers_per_second,
-  },
-});
 
 const filterData = (meteorsForDates: Nasa.Response.MeteorsForTimePeriod, hazardous: boolean, onlyCount: boolean) => {
   // MARK: there's no transformation functions for dictionaries || it just hasn't been found
@@ -76,3 +50,14 @@ const filterData = (meteorsForDates: Nasa.Response.MeteorsForTimePeriod, hazardo
     {}
   );
 };
+
+const convert = (el: Nasa.Response.Meteor): Home.Response.Meteor => ({
+  id: el.id,
+  name: el.name,
+  diameter_in_meters: el.estimated_diameter.meters,
+  is_potentially_hazardous_asteroid: el.is_potentially_hazardous_asteroid,
+  close_approach_date_full: el.close_approach_data[0].close_approach_date_full,
+  relative_velocity: {
+    kilometers_per_second: el.close_approach_data[0].relative_velocity.kilometers_per_second,
+  },
+});

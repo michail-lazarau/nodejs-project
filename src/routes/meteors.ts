@@ -1,10 +1,10 @@
 import express from 'express';
-import { meteorsController } from '../controllers/meteors.ts';
-import { validator } from '../apiSchemas/request/schemaValidator.ts';
+import { getMeteors, getStartPage } from '../controllers/meteors';
+import validateRequestSchema from '../apiSchemas/request/schemaValidator';
 
 const router = express.Router();
 
-router.get('/', meteorsController.getStartPage);
-router.get('/meteors', validator.validateRequestSchema('neoWsSchema'), meteorsController.getMeteors);
+router.get('/', getStartPage);
+router.get('/meteors', validateRequestSchema('neoWsSchema'), getMeteors);
 
 export default router;

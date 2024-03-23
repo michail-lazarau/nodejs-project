@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-
-const marsRoverPhotosService = require('../services/MarsRoverPhotos.js');
+import getMostRecentPhoto from '../services/marsRoverPhotos';
 
 const makeQueryParams = (apiKey: string) => {
   const urlSearchParams = new URLSearchParams({});
@@ -18,7 +17,7 @@ const getLatestMarsPhotoPage = (req: Request, res: Response) => {
 const postUserToGetLatestMarsPhoto = async (req: Request, res: Response, next: NextFunction) => {
   const apiKey = req.body.api_key;
   try {
-    const latestMarsPhoto = await marsRoverPhotosService.getMostRecentPhoto(makeQueryParams(apiKey));
+    const latestMarsPhoto = await getMostRecentPhoto(makeQueryParams(apiKey));
     // res.status(201).redirect(latestMarsPhoto)
     // res.status(201).send(`<img src='${latestMarsPhoto}'>`)
     res.status(201).render('photos/mars-rover-latest-photo', {

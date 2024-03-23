@@ -1,5 +1,5 @@
-import marsRoverPhotosSchema from './neoWsRequestSchema.ts';
-import neoWsSchema from './marsRoverPhotosRequestSchema.ts';
+import marsRoverPhotosSchema from './neoWsRequestSchema';
+import neoWsSchema from './marsRoverPhotosRequestSchema';
 import { ObjectSchema } from 'joi';
 
 interface Schemas {

@@ -1,9 +1,8 @@
 import { ObjectSchema } from 'joi';
 import { Request, Response, NextFunction } from 'express';
 // eslint-disable-next-line import/no-unresolved
-import { Query } from 'express-serve-static-core';
-// eslint-disable-next-line import/no-unresolved
-import schemas from './validators/index.js';
+import { Query } from 'express-serve-static-core'; // todo: to resolve
+import schemas from './validators/index';
 
 type RequestHandler = (req: Request, res: Response, next: NextFunction) => void;
 

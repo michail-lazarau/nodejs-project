@@ -2,12 +2,12 @@
   "name": "nodejs-training-project",
   "version": "1.0.0",
   "description": "",
-  "main": "app.ts",
-  "type": "module",
+  "main": "src/app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx nodemon",
     "start": "npm run build && node build/app",
+    "startnew": "tsc && node build/app.js",
     "build": "rimraf ./build && npx tsc",
     "eslint": "npx eslint ./src",
     "eslint-fix": "eslint --fix ./src",
@@ -19,7 +19,6 @@
   },
   "private": true,
   "dependencies": {
-    "@types/node": "^20.11.30",
     "axios": "^1.6.7",
     "body-parser": "^1.20.2",
     "date-fns": "^3.5.0",
@@ -35,10 +34,11 @@
     ],
     "ext": ".js,.ts,.json,.njk,.html,.css",
     "ignore": [],
-    "exec": "npx ts-node ./app.ts"
+    "exec": "npx ts-node ./src/app.ts"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/node": "^20.11.30",
     "@types/nunjucks": "^3.2.6",
     "@typescript-eslint/eslint-plugin": "^7.3.1",
     "@typescript-eslint/parser": "^7.3.1",
