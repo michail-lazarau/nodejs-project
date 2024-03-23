@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "../includes/head.html" %}
+{% block css %}
+<link rel="stylesheet" href="/stylesheets/forms.css">
+{% endblock %}
+<body>
+{% include "../includes/navigation.html" %}
+<main>
+    <form class="search-form" action="/meteors" method="GET">
+        <div class="form-control">
+            <label for="start_date">Start Date</label>
+            <input type="text" name="start_date" id="start_date" placeholder="yyyy-MM-dd">
+        </div>
+        <div class="form-control">
+            <label for="end_date">End Date</label>
+            <input type="text" name="end_date" id="end_date" placeholder="yyyy-MM-dd">
+        </div>
+        <div class="form-control">
+            <label for="is_potentially_hazardous_asteroid">Is Potentially Hazardous</label>
+            <input type="text" name="is_potentially_hazardous_asteroid" id="is_potentially_hazardous_asteroid" placeholder="true/false">
+        </div>
+        <div class="form-control" id="isCountedControl">
+            <label class="required-field" for="is_counted">Asteroids Counter For Day</label>
+            <input type="text" name="is_counted" id="is_counted" placeholder="true/false">
+        </div>
+        <div class="form-control">
+            <label class="required-field" for="api_key">Nasa Demo Key</label>
+            <input type="text" name="api_key" id="api_key">
+        </div>
+        <button class="btn" type="submit">Search for meteors</button>
+    </form>
+</main>
+</body>
+</html>

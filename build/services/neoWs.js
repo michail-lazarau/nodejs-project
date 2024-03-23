@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getMeteors = void 0;
 const axios_1 = __importDefault(require("axios"));
 const urlBuilder_1 = require("../utilities/urlBuilder");
-const PATH_NeoWs = process.env.PATH_NeoWs ?? '';
+const environment_1 = require("../config/environment");
 const getMeteors = async (searchParams) => {
-    const url = (0, urlBuilder_1.buildUrl)(PATH_NeoWs, searchParams);
+    const url = (0, urlBuilder_1.buildUrl)(environment_1.environment.nasaApi.PATH_NeoWs ?? '', searchParams);
     return (0, axios_1.default)(url);
 };
 exports.getMeteors = getMeteors;

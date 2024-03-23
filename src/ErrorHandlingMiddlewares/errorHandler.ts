@@ -1,5 +1,7 @@
 import { Response } from 'express';
 
+// todo: to resolve
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const errorHandler = (err: any, res: Response) => {
   const errorCode = err?.response?.status || 500;
   res.status(errorCode).json({

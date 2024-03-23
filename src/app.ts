@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import { environment } from './config/environment';
 import express, { Request, Response, NextFunction } from 'express';
 import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
@@ -7,19 +7,17 @@ import marsRoverPhotosRoutes from './routes/photos';
 import { errorHandler, notFoundHandler } from './ErrorHandlingMiddlewares/errorHandler';
 import path from 'path';
 
-const { PORT } = process.env;
 const app = express();
 
-dotenv.config({ path: './.env' });
-
-app.use(express.static(path.join(__dirname, 'public'))); // styles
+app.use(express.static(path.resolve(__dirname, 'public'))); // styles
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.engine('html', nunjucks.render);
 app.set('view engine', 'html');
 
-nunjucks.configure(path.join(__dirname, 'views'), {
+console.log(__dirname);
+nunjucks.configure(path.resolve(__dirname, 'views'), {
   autoescape: false,
   express: app,
 });
@@ -39,6 +37,7 @@ app.use(notFoundHandler);
 
 app.use(errorHandler);
 
-app.listen(parseInt(PORT ?? '3000'), 'localhost', () => {
-  console.log(`Express app is running on port: ${PORT}`);
+app.listen(parseInt(environment.port ?? '3000'), 'localhost', () => {
+  // eslint-disable-next-line no-console
+  console.log(`Express app is running on port: ${environment.port}`);
 });

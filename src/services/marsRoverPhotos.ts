@@ -3,19 +3,17 @@ import * as dateUtil from 'date-fns';
 import { buildUrl } from '../utilities/urlBuilder';
 import { DATE_TEMPLATE } from '../utilities/dates';
 import { URLSearchParams } from 'node:url';
-
-const PATH_MarsCuriousityPhotoManifest = process.env.PATH_MarsCuriousityPhotoManifest ?? ''; // todo: amend
-const PATH_MarsCuriousityPhotos = process.env.PATH_MarsCuriousityPhotos ?? ''; // todo: amend
+import { environment } from '../config/environment';
 
 // MARK: searchParams: api_key
 const getPhotoManifestData = async (searchParams: URLSearchParams) => {
-  const manifestUrl = buildUrl(PATH_MarsCuriousityPhotoManifest, searchParams);
+  const manifestUrl = buildUrl(environment.nasaApi.PATH_MarsCuriousityPhotoManifest ?? '', searchParams); // todo: amend path
   return await axios.get(manifestUrl);
 };
 
 // MARK: searchParams: api_key, earth_date
 const getPhotos = async (searchParams: URLSearchParams) => {
-  const url = buildUrl(PATH_MarsCuriousityPhotos, searchParams);
+  const url = buildUrl(environment.nasaApi.PATH_MarsCuriousityPhotos ?? '', searchParams); // todo: amend path
   return await axios.get(url);
 };
 

@@ -30,14 +30,13 @@ const axios_1 = __importDefault(require("axios"));
 const dateUtil = __importStar(require("date-fns"));
 const urlBuilder_1 = require("../utilities/urlBuilder");
 const dates_1 = require("../utilities/dates");
-const PATH_MarsCuriousityPhotoManifest = process.env.PATH_MarsCuriousityPhotoManifest ?? '';
-const PATH_MarsCuriousityPhotos = process.env.PATH_MarsCuriousityPhotos ?? '';
+const environment_1 = require("../config/environment");
 const getPhotoManifestData = async (searchParams) => {
-    const manifestUrl = (0, urlBuilder_1.buildUrl)(PATH_MarsCuriousityPhotoManifest, searchParams);
+    const manifestUrl = (0, urlBuilder_1.buildUrl)(environment_1.environment.nasaApi.PATH_MarsCuriousityPhotoManifest ?? '', searchParams);
     return await axios_1.default.get(manifestUrl);
 };
 const getPhotos = async (searchParams) => {
-    const url = (0, urlBuilder_1.buildUrl)(PATH_MarsCuriousityPhotos, searchParams);
+    const url = (0, urlBuilder_1.buildUrl)(environment_1.environment.nasaApi.PATH_MarsCuriousityPhotos ?? '', searchParams);
     return await axios_1.default.get(url);
 };
 const getMostRecentPhoto = async (searchParams) => {
