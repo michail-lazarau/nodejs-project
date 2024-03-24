@@ -8,14 +8,14 @@ type RequestHandler = (req: Request, res: Response, next: NextFunction) => void;
 
 const validateRequestSchema = (schema: string): RequestHandler => {
   const selectedSchema: ObjectSchema = schemas[schema];
+
   if (!selectedSchema) {
     throw new Error(`${schema} does not exist`);
   }
 
   return (req: Request, res: Response, next: NextFunction) => {
     removeEmptyQueryParams(req.query);
-
-    const dataType = req.body ? 'body' : 'query';
+    const dataType = Object.keys(req.body).length === 0 ? 'query' : 'body';
     const { error } = selectedSchema.validate(req[dataType]);
 
     if (error) {

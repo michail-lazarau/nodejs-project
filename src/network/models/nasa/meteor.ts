@@ -43,7 +43,7 @@ namespace Home {
     }
 
     export interface MeteorsCountForTimePeriod {
-      [key: string]: number; // dynamic keys
+      [key: string]: { count: number }; // dynamic keys
     }
 
     export interface Meteor {

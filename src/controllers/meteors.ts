@@ -2,9 +2,10 @@ import * as service from '../services/neoWs';
 import { Request, Response, NextFunction } from 'express';
 import { Nasa, Home } from '../network/models/nasa/meteor';
 import { encode } from 'node:querystring';
+import path from 'path';
 
-export const getStartPage = (res: Response) => {
-  res.render('meteors/meteors-search', {
+export const getStartPage = async (req: Request, res: Response) => {
+  res.render(path.join(__dirname, '..', 'views', 'meteors/meteors-search.html'), {
     pageTitle: 'Meteors Search Page',
     path: '/',
   });
@@ -20,10 +21,10 @@ export const getMeteors = async (req: Request, res: Response, next: NextFunction
     const queryParams = new URLSearchParams(encode(rest as QueryRest));
     const { data } = await service.getMeteors(queryParams);
     const filteredData = filterData(data.near_earth_objects, hazardous, onlyCount);
-    res.status(200).render('meteors/search-result', {
+    res.status(200).render('meteors/search-result.html', {
       data: filteredData,
       pageTitle: 'Meteors Search Result',
-      path: `/meteors/${req.query}`,
+      path: '/meteors',
     });
   } catch (err) {
     next(err);
@@ -38,7 +39,8 @@ const filterData = (meteorsForDates: Nasa.Response.MeteorsForTimePeriod, hazardo
       [key, value]: [string, Nasa.Response.Meteor[]]
     ) => {
       if (onlyCount) {
-        accumulator[key] = value.filter((meteor) => meteor.is_potentially_hazardous_asteroid === hazardous).length;
+        const count = value.filter((meteor) => meteor.is_potentially_hazardous_asteroid === hazardous).length;
+        accumulator[key] = { count: count };
       } else {
         accumulator[key] = value.flatMap((meteor) => {
           return meteor.is_potentially_hazardous_asteroid === hazardous ? [convert(meteor)] : [];

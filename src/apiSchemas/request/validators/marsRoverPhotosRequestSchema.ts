@@ -1,4 +1,3 @@
-// import { object, alternatives, string, number } from 'joi';
 import joi from 'joi';
 
 export const marsRoverPhotos = joi.object({

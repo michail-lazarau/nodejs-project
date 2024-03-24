@@ -7,8 +7,8 @@ const makeQueryParams = (apiKey: string) => {
   return urlSearchParams;
 };
 
-const getLatestMarsPhotoPage = (req: Request, res: Response) => {
-  res.render('photos/mars-rover-latest-photo-search', {
+const getLatestMarsPhotoPage = async (req: Request, res: Response) => {
+  res.render('photos/mars-rover-latest-photo-search.html', {
     pageTitle: 'Search Latest Mars Photo',
     path: '/mars-rover-latest-photo-search',
   });
@@ -20,7 +20,7 @@ const postUserToGetLatestMarsPhoto = async (req: Request, res: Response, next: N
     const latestMarsPhoto = await getMostRecentPhoto(makeQueryParams(apiKey));
     // res.status(201).redirect(latestMarsPhoto)
     // res.status(201).send(`<img src='${latestMarsPhoto}'>`)
-    res.status(201).render('photos/mars-rover-latest-photo', {
+    res.status(201).render('photos/mars-rover-latest-photo.html', {
       url: latestMarsPhoto,
       pageTitle: 'Latest Mars Photo',
       path: '/mars-rover-latest-photo',

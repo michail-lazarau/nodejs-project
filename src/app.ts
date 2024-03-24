@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.engine('html', nunjucks.render);
 app.set('view engine', 'html');
 
-console.log(__dirname);
 nunjucks.configure(path.resolve(__dirname, 'views'), {
   autoescape: false,
   express: app,

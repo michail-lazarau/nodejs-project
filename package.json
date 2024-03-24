@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx nodemon",
     "start": "npm run build && node build/app",
-    "startnew": "tsc && node build/app.js",
     "build": "rimraf ./build && npx tsc && npm run copy-files",
     "copy-files": "copyfiles -u 1 \"src/**/**/*.html\" \"src/**/*.css\" build/",
     "eslint": "npx eslint ./src",
