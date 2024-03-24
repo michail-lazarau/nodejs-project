@@ -18,8 +18,6 @@ const postUserToGetLatestMarsPhoto = async (req: Request, res: Response, next: N
   const apiKey = req.body.api_key;
   try {
     const latestMarsPhoto = await getMostRecentPhoto(makeQueryParams(apiKey));
-    // res.status(201).redirect(latestMarsPhoto)
-    // res.status(201).send(`<img src='${latestMarsPhoto}'>`)
     res.status(201).render('photos/mars-rover-latest-photo.html', {
       url: latestMarsPhoto,
       pageTitle: 'Latest Mars Photo',
