@@ -8,4 +8,4 @@ const neoWsSchema = joi.object({
   is_counted: joi.boolean(),
 });
 
-export default neoWsSchema;
+export { neoWsSchema };

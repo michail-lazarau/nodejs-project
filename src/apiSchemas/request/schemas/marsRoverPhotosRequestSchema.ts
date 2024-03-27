@@ -1,9 +1,9 @@
 import joi from 'joi';
 
-export const marsRoverPhotos = joi.object({
+const marsRoverPhotos = joi.object({
   userId: joi.alternatives([joi.string(), joi.number()]).required(),
   userName: joi.string().required(),
   api_key: joi.string().alphanum().required(),
 });
 
-export default marsRoverPhotos;
+export { marsRoverPhotos };
