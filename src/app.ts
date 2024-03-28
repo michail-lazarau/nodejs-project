@@ -1,25 +1,20 @@
 import { environment } from './config/environment';
 import express, { Request, Response, NextFunction } from 'express';
-import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
 import asteroidsRoutes from './routes/meteors';
 import marsRoverPhotosRoutes from './routes/photos';
 import { errorHandler, notFoundHandler } from './ErrorHandlingMiddlewares/errorHandler';
 import path from 'path';
+import { initSentry, sentryErrorHandler } from './sentry';
+import { registerViewEngine } from './viewEngine';
 
 const app = express();
+initSentry(app);
+registerViewEngine(app);
 
-app.use(express.static(path.resolve(__dirname, 'public'))); // styles
+app.use(express.static(path.join(__dirname, 'public'))); // styles
 
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.engine('html', nunjucks.render);
-app.set('view engine', 'html');
-
-nunjucks.configure(path.resolve(__dirname, 'views'), {
-  autoescape: false,
-  express: app,
-});
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -27,6 +22,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader('Access-Control-Allow-Header', 'Content-Type, Authorization');
   next();
 });
+
+app.use(sentryErrorHandler);
 
 app.use(asteroidsRoutes);
 

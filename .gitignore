@@ -36,3 +36,6 @@ npm-debug.log
 # IDEA
 .idea
 
+
+# Sentry Config File
+.sentryclirc
