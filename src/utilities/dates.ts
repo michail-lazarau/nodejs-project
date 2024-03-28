@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 const getLastFridayDate = () => {
   const date = new Date();
   const dayOfWeek = date.getDay();
@@ -15,15 +17,12 @@ const getLastMondayDate = () => {
   return date;
 };
 
-const formatDate = (date) => {
-  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-  return date.toLocaleDateString('fr-CA', options); // 'fr-CA' gives format: 'yyyy-MM-dd'
+export const lastMondaySerialized = () => {
+  return format(getLastMondayDate(), DATE_TEMPLATE);
 };
 
-exports.lastMondaySerialized = () => {
-  return formatDate(getLastMondayDate());
+export const lastFridaySerialized = () => {
+  return format(getLastFridayDate(), DATE_TEMPLATE);
 };
 
-exports.lastFridaySerialized = () => {
-  return formatDate(getLastFridayDate());
-};
+export const DATE_TEMPLATE = 'yyyy-MM-dd';

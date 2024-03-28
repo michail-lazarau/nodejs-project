@@ -3,17 +3,21 @@
     "node": true,
     "browser": true,
     "commonjs": true,
-    "es2021": true
+    "es2022": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:promise/recommended",
-    "plugin:import/recommended"
+//    "plugin:import/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": "latest"
+    "ecmaVersion": 2022,
+    "sourceType": "module"
   },
   "plugins": [
     "@typescript-eslint"
@@ -46,6 +50,7 @@
     ],
     //* TS
     "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-namespace": "off",
     //* Enhance Readability
     "indent": [
       "error",

@@ -6,12 +6,13 @@
     <main>
         <ul>
             {% for key, value in data %}
+            {% if value.count %}
+            <div>Date: {{key}}</div>
+                <div>Count: {{value.count}}</div>
+            {% endif %}
                 {% for asteroid in value %}
             <div>Date: {{key}}</div>
             <li>
-                {% if asteroid.count %}
-                    <div>Count: {{asteroid.count}}</div>
-                {% endif %}
                 <div>Asteroid Id: {{asteroid.id}}</div>
                 <div>Asteroid Name: {{asteroid.name}}</div>
                 <div>Diameter in meters: from {{asteroid.diameter_in_meters.estimated_diameter_min}} to {{asteroid.diameter_in_meters.estimated_diameter_max}}</div>
