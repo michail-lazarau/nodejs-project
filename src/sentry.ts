@@ -1,6 +1,7 @@
 import { Express } from 'express';
 import * as sentry from '@sentry/node';
 import { nodeProfilingIntegration } from '@sentry/profiling-node';
+import { environment } from './config/environment';
 
 export const initSentry = (app: Express) => {
   function registerMiddlewares() {
@@ -10,7 +11,7 @@ export const initSentry = (app: Express) => {
 
   function init() {
     sentry.init({
-      dsn: 'https://e825bf53877af05e2387390703cf4433@o4506988735823872.ingest.us.sentry.io/4506988738772992',
+      dsn: environment.sentry.dns,
       integrations: [
         new sentry.Integrations.Http({ tracing: true }),
         new sentry.Integrations.Express({ app: app }),
