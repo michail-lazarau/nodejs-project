@@ -3,6 +3,11 @@ import { Request, Response, NextFunction } from 'express';
 import { Nasa, Home } from '../network/models/nasa/meteor';
 import { encode } from 'node:querystring';
 import path from 'path';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 export const getStartPage = async (req: Request, res: Response) => {
   res.render(path.join(__dirname, '..', 'views', 'meteors/meteors-search.html'), {

@@ -3,7 +3,7 @@ dotenv.config();
 
 const { HOSTNAME, PATH_NeoWs, PATH_MarsCuriousityPhotos, PATH_MarsCuriousityPhotoManifest, PORT } = process.env;
 
-export const environment = {
+const environment = {
   port: PORT,
   nasaApi: {
     hostname: HOSTNAME,
@@ -12,3 +12,5 @@ export const environment = {
     PATH_MarsCuriousityPhotoManifest: PATH_MarsCuriousityPhotoManifest,
   },
 };
+
+export default environment;

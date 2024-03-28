@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/app.ts",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx nodemon",
@@ -30,12 +31,10 @@
     "typescript": "^5.4.2"
   },
   "nodemonConfig": {
-    "watch": [
-      "src"
-    ],
-    "ext": ".js,.ts,.json,.njk,.html,.css",
+    "watch": ["src"],
+    "ext": ".js, .ts, .json, .html, .css",
     "ignore": [],
-    "exec": "npx ts-node ./src/app.ts"
+    "exec": "node --experimental-specifier-resolution=node --loader ts-node/esm ./src/app.ts"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",

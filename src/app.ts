@@ -1,4 +1,4 @@
-import { environment } from './config/environment';
+import environment from './config/environment';
 import express, { Request, Response, NextFunction } from 'express';
 import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
@@ -6,8 +6,13 @@ import asteroidsRoutes from './routes/meteors';
 import marsRoverPhotosRoutes from './routes/photos';
 import { errorHandler, notFoundHandler } from './ErrorHandlingMiddlewares/errorHandler';
 import path from 'path';
+import { fileURLToPath } from 'node:url';
 
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 app.use(express.static(path.resolve(__dirname, 'public'))); // styles
 

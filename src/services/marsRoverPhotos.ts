@@ -1,9 +1,9 @@
-import axios, { Axios, AxiosResponse } from 'axios';
+import axios from 'axios';
 import * as dateUtil from 'date-fns';
 import { buildUrl } from '../utilities/urlBuilder';
 import { DATE_TEMPLATE } from '../utilities/dates';
 import { URLSearchParams } from 'node:url';
-import { environment } from '../config/environment';
+import environment from '../config/environment';
 
 // MARK: searchParams: api_key
 const getPhotoManifestData = async (searchParams: URLSearchParams) => {
